@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Minimal View — Card Showcase</title>
+  <style>
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(135deg,#0f172a 0%, #071033 40%, #0b1226 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;align-items:center;justify-content:center;padding:32px;
+    }
+
+    /* container */
+    .stage{
+      width:min(1100px,98%);
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    /* left hero */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.04);
+      padding:28px;border-radius:16px;backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+    .badge{display:inline-block;padding:6px 10px;background:linear-gradient(90deg,#7c3aed,#06b6d4);border-radius:999px;font-size:13px;font-weight:600;color:white}
+    h1{font-size:28px;margin-top:16px;line-height:1.05}
+    p.lead{opacity:0.9;margin-top:12px}
+
+    .controls{display:flex;gap:12px;margin-top:18px}
+    .btn{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
+    .btn-primary{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#021124}
+
+    /* right column: cards */
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);min-height:96px;display:flex;flex-direction:column;justify-content:space-between;
+      transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(7,12,27,0.6)}
+    .card h3{font-size:14px}
+    .meta{font-size:12px;opacity:.8}
+
+    /* fancy circle decorative */
+    .decor{
+      position:relative;margin-top:18px;height:120px;border-radius:12px;overflow:hidden;background:radial-gradient(circle at 20% 20%, rgba(124,58,237,0.10), transparent 10%), radial-gradient(circle at 80% 80%, rgba(6,182,212,0.08), transparent 12%);
+      display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);
+    }
+    .pulse{
+      width:84px;height:84px;border-radius:999px;background:linear-gradient(135deg, rgba(124,58,237,0.95), rgba(6,182,212,0.95));display:flex;align-items:center;justify-content:center;font-weight:800;color:#021124;box-shadow:0 8px 30px rgba(8,15,35,0.6);
+      animation:pop 2.6s infinite ease-in-out;
+    }
+    @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+
+    /* responsive */
+    @media (max-width:900px){
+      .stage{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      .cards{grid-template-columns:1fr}
+      h1{font-size:20px}
+    }
+
+    /* small utility */
+    .muted{opacity:.75;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <section class="hero">
+      <span class="badge">Demo</span>
+      <h1>Minimal HTML/CSS View — Showcase card</h1>
+      <p class="lead">Một view nhỏ, responsive, có card hover, nút tương tác và trang trí gradient. Dùng như mẫu để phát triển nhanh.</p>
+
+      <div class="controls">
+        <button class="btn btn-primary" id="actionBtn">Nhấn để thay đổi</button>
+        <button class="btn btn-ghost" id="infoBtn">Thông tin</button>
+      </div>
+
+      <div class="decor" id="decor">
+        <div class="pulse" id="pulse">Go</div>
+      </div>
+
+      <p class="muted">Kích thước demo: responsive — sao chép file này và mở bằng trình duyệt để xem.</p>
+    </section>
+
+    <aside class="cards">
+      <div class="card">
+        <div>
+          <h3>Card 1 — Thống kê</h3>
+          <p class="meta">Ngẫu nhiên: <span id="num1">42</span></p>
+        </div>
+        <div class="muted">Cập nhật realtime (giả lập)</div>
+      </div>
+
+      <div class="card">
+        <div>
+          <h3>Card 2 — Trạng thái</h3>
+          <p class="meta">Trạng thái: <strong id="state">OK</strong></p>
+        </div>
+        <div class="muted">Hover để thấy hiệu ứng</div>
+      </div>
+
+      <div class="card">
+        <div>
+          <h3>Card 3 — Tác vụ</h3>
+          <p class="meta">Hành động gần nhất: —</p>
+        </div>
+        <div class="muted">Nhấn nút để thử</div>
+      </div>
+
+      <div class="card">
+        <div>
+          <h3>Card 4 — Ghi chú</h3>
+          <p class="meta">Mô tả ngắn gọn về mẫu view.</p>
+        </div>
+        <div class="muted">Sử dụng cho landing nhỏ</div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Nhỏ gọn: tương tác giả lập
+    const btn = document.getElementById('actionBtn');
+    const info = document.getElementById('infoBtn');
+    const num1 = document.getElementById('num1');
+    const state = document.getElementById('state');
+    const pulse = document.getElementById('pulse');
+
+    function randInt(a,b){ return Math.floor(Math.random()*(b-a+1))+a }
+
+    btn.addEventListener('click',()=>{
+      num1.textContent = randInt(1,999);
+      state.textContent = (Math.random()>.3)?'OK':'WARN';
+      pulse.textContent = '✓';
+      setTimeout(()=>pulse.textContent='Go',700);
+    });
+
+    info.addEventListener('click',()=>{
+      alert('Đây là view demo: sao chép file .html và mở bằng trình duyệt để chỉnh sửa.');
+    });
+  </script>
+</body>
+</html>
